@@ -18,6 +18,12 @@ const treatments = {
     mgPerKgPerDay: 60,
     durationDays: "1‑3 dage",
     notes: "Børn kan få 15 mg/kg pr. dosis (typisk 60 mg/kg pr. døgn) fordelt på 4 doser med mindst 4 timer mellem doserne. Maksimalt 3 g pr. døgn."
+    ,
+    medication: {
+      name: "Paracetamol",
+      mixture: { mgPerMl: 24, packageVolumes: [100, 250] },
+      tablets: { strengths: [500], breakable: [true], packageCounts: [20, 30] }
+    }
   },
   ibuprofen: {
     displayName: "Feber/smerter (ibuprofen)",
@@ -28,6 +34,12 @@ const treatments = {
     mgPerKgPerDay: 30,
     durationDays: "1‑3 dage",
     notes: "Børn over 6 måneder (≥7 kg) kan få 5–10 mg/kg pr. dosis hver 6.–8. time. Maksimalt 30 mg/kg pr. døgn."
+    ,
+    medication: {
+      name: "Ibuprofen",
+      mixture: { mgPerMl: 20, packageVolumes: [100] },
+      tablets: { strengths: [200], breakable: [false], packageCounts: [20, 30] }
+    }
   },
   otitis: {
     displayName: "Mellemørebetændelse (akut otitis media)",
@@ -53,6 +65,12 @@ const treatments = {
       // Noter baseret på kilden: Amoxicillin + clavulansyre 50/12,5 mg/kg/døgn i 3 doser i 7 dage.
       notes: "Ved behandlingssvigt eller recidiv anvendes amoxicillin + clavulansyre 50/12,5 mg/kg/døgn fordelt på 3 doser i 7 dage."
     }
+    ,
+    medication: {
+      name: "Penicillin V",
+      mixture: { mgPerMl: 50, packageVolumes: [200] },
+      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+    }
   },
   strep: {
     displayName: "Streptokok halsinfektion (tonsillitis)",
@@ -77,6 +95,12 @@ const treatments = {
       durationDays: 7,
       // Noter baseret på kilden: Ved recidiv gives penicillin V i 10 dage; alternativt amoxicillin + clavulansyre 50/12,5 mg/kg/døgn i 7 dage.
       notes: "Ved recidiv gives penicillin V i 10 dage; alternativt amoxicillin + clavulansyre 50/12,5 mg/kg/døgn i 7 dage."
+    }
+    ,
+    medication: {
+      name: "Penicillin V",
+      mixture: { mgPerMl: 50, packageVolumes: [200] },
+      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
     }
   },
   erythema: {
@@ -106,6 +130,12 @@ const treatments = {
         notes: "Børn &lt;8 år: Azithromycin 10 mg/kg én gang dagligt i 3 dage."
       }
     }
+    ,
+    medication: {
+      name: "Penicillin V",
+      mixture: { mgPerMl: 50, packageVolumes: [200] },
+      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+    }
   },
   lactulose: {
     displayName: "Forstoppelse (laktulose)",
@@ -115,6 +145,11 @@ const treatments = {
     durationDays: "langvarig behandling",
     // Noter baseret på kilden: Laktulose 1–2 ml/kg/dag fordelt på 1–2 doser.
     notes: "Laktulose gives 1–2 ml/kg/dag fordelt på 1–2 doser. Doseringen kan justeres efter effekt."
+    ,
+    medication: {
+      name: "Laktulose",
+      mixture: { mgPerMl: 670, packageVolumes: [500] }
+    }
   },
   macrogol: {
     displayName: "Forstoppelse (macrogol/Movicol Junior)",
@@ -124,6 +159,12 @@ const treatments = {
     durationDays: "langvarig behandling",
     // Noter baseret på kilden: Vedligeholdelsesbehandling med Macrogol 3350 svarer til ca. halve udtømningsdoser – ½ til 4 breve Movicol Junior dagligt afhængigt af vægt. Ét brev indeholder 6,9 g.
     notes: "Vedligeholdelsesbehandling med Macrogol 3350 svarer til ca. halve udtømningsdoser – ½ til 4 breve Movicol Junior dagligt afhængigt af vægt. Ét brev indeholder 6,9 g."
+    ,
+    medication: {
+      name: "Macrogol",
+      mixture: { mgPerMl: null, packageVolumes: [] },
+      sachetSizeG: 6.9
+    }
   }
   ,
   // Nye infektioner og tilstande baseret på DSAM/SST‑vejledninger
@@ -142,6 +183,23 @@ const treatments = {
       durationDays: 5,
       notes: "Clarithromycin 15 mg/kg/døgn fordelt på 2 doser i 5 dage. Ved mistanke om Haemophilus influenzae kan amoxicillin/clavulansyre 50/12,5 mg/kg/døgn fordelt på 3 doser i 5 dage anvendes."
     }
+    ,
+    medication: {
+      name: "Penicillin V",
+      mixture: { mgPerMl: 50, packageVolumes: [200] },
+      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+    },
+    alternativeMedication: {
+      // Clarithromycin til pneumoni
+      name: "Clarithromycin",
+      mixture: { mgPerMl: 25, packageVolumes: [50] },
+      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [14] },
+      other: {
+        name: "Amoxicillin/clavulansyre",
+        mixture: { mgPerMl: 50, packageVolumes: [70] },
+        tablets: { strengths: [500], breakable: [true], packageCounts: [10] }
+      }
+    }
   },
   sinusitis: {
     // Bihulebetændelse er den danske betegnelse, akut rhinosinuitis er den latinske
@@ -158,6 +216,21 @@ const treatments = {
       durationDays: 7,
       notes: "Ved penicillinallergi kan clarithromycin 15 mg/kg/døgn fordelt på 2 doser i 7 dage anvendes. For børn ≥8 år kan doxycyclin 4 mg/kg/døgn i én daglig dosis overvejes."
     }
+    ,
+    medication: {
+      name: "Penicillin V",
+      mixture: { mgPerMl: 50, packageVolumes: [200] },
+      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+    },
+    alternativeMedication: {
+      name: "Clarithromycin",
+      mixture: { mgPerMl: 25, packageVolumes: [50] },
+      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [14] },
+      other: {
+        name: "Doxycyclin",
+        tablets: { strengths: [100], breakable: [false], packageCounts: [10] }
+      }
+    }
   },
   impetigo: {
     displayName: "Hudinfektion (impetigo/inficeret sår)",
@@ -166,12 +239,12 @@ const treatments = {
     dosesPerDay: 3,
     durationDays: 7,
     notes: "Dicloxacillin 50 mg/kg/døgn fordelt på 3 doser i 7 dage.",
-    alternative: {
-      name: "Fusidinsyre p.o.",
-      mgPerKgPerDay: 15,
-      dosesPerDay: 3,
-      durationDays: 7,
-      notes: "Fusidinsyre 15 mg/kg/døgn fordelt på 3 doser i 7 dage."
+    alternative: null
+    ,
+    medication: {
+      name: "Dicloxacillin",
+      mixture: { mgPerMl: 25, packageVolumes: [100] },
+      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [20] }
     }
   },
   cystitis: {
@@ -188,6 +261,17 @@ const treatments = {
       durationDays: "3–5",
       notes: "Trimethoprim 3 mg/kg pr. dosis (2 doser pr. døgn) i 3–5 dage."
     }
+    ,
+    medication: {
+      name: "Pivmecillinam",
+      mixture: { mgPerMl: 20, packageVolumes: [100] },
+      tablets: { strengths: [200], breakable: [true], packageCounts: [20] }
+    },
+    alternativeMedication: {
+      name: "Trimethoprim",
+      mixture: { mgPerMl: 40, packageVolumes: [50] },
+      tablets: { strengths: [100], breakable: [true], packageCounts: [20] }
+    }
   },
   herpes: {
     displayName: "Herpesinfektion (herpes simplex)",
@@ -196,7 +280,12 @@ const treatments = {
     dosesPerDay: 5,
     mgPerKgPerDay: 75,
     durationDays: "5–7",
-    notes: "Aciclovir 15 mg/kg pr. dosis 5 gange dagligt i 5–7 dage."
+    notes: "Aciclovir 15 mg/kg pr. dosis 5 gange dagligt i 5–7 dage.",
+    medication: {
+      name: "Aciclovir",
+      mixture: { mgPerMl: 40, packageVolumes: [100] },
+      tablets: { strengths: [200], breakable: [true], packageCounts: [25] }
+    }
   },
   tinea: {
     displayName: "Hovedsvamp (tinea capitis)",
@@ -211,6 +300,11 @@ const treatments = {
     alternative: {
       name: "Griseofulvin (magistral)",
       notes: "Kan anvendes som alternativ behandling, men findes kun som magistral fremstilling."
+    }
+    ,
+    medication: {
+      name: "Terbinafin",
+      tablets: { strengths: [62.5, 125, 250], breakable: [false, false, false], packageCounts: [14] }
     }
   },
   asthma: {
@@ -285,6 +379,18 @@ const treatments = {
     alternative: {
       name: "Benzylbenzoat",
       notes: "Kan anvendes som alternativ ved behandling af scabies, men er sjældent nødvendigt."
+    },
+    // Tilføj mulighed for oral behandling med Scatol (ivermectin) efter vægt
+    scatol: {
+      name: "Scatol (ivermectin)",
+      mgPerKgPerDose: 0.2,
+      dosesPerDay: 1,
+      repeatAfterDays: 7,
+      notes: "Ivermectin 0,2 mg/kg pr. dosis gives som engangsdosis og gentages efter 7 dage. Må ikke anvendes til børn under 15 kg."
+    },
+    scatolMedication: {
+      name: "Scatol (ivermectin)",
+      tablets: { strengths: [3], breakable: [false], packageCounts: [4, 10] }
     }
   },
   lice: {
@@ -322,6 +428,99 @@ function formatDose(value, unit) {
   // Round to 1 decimal if needed
   const rounded = Math.round(value * 10) / 10;
   return `${rounded} ${unit}`;
+}
+
+// Hjælpefunktion til at udtrække et heltal fra en varighedsstreng som "3–5" eller "5–7".
+function parseDurationDays(duration) {
+  if (typeof duration === 'string') {
+    const numbers = duration.match(/\d+/g);
+    if (numbers && numbers.length > 0) {
+      // returner det største tal i rækken (antager at dette dækker længste behandlingsvarighed)
+      return Math.max(...numbers.map(n => parseInt(n)));
+    }
+  }
+  return typeof duration === 'number' ? duration : null;
+}
+
+/*
+ * Genererer tekst om lægemidlets administrationsform og pakninger.
+ * trt.medication indeholder oplysninger om standardpræparat (navn, mixtur, tabletter osv.).
+ * For nogle behandlinger findes alternative præparater i trt.alternativeMedication.
+ */
+function generateMedicationInfo(medObj, perDose, daily, duration, showName = true, showTablets = true) {
+  let html = "";
+  if (!medObj) return html;
+  // Navn på lægemiddel, hvis ønsket
+  if (showName) {
+    html += `<p><strong>Lægemiddel:</strong> ${medObj.name}</p>`;
+  }
+  // Mixtur
+  if (medObj.mixture && typeof medObj.mixture.mgPerMl === 'number') {
+    const mgPerMl = medObj.mixture.mgPerMl;
+    const mlPerDose = perDose && mgPerMl > 0 ? perDose / mgPerMl : null;
+    const mlPerDay = daily && mgPerMl > 0 ? daily / mgPerMl : null;
+    if (mlPerDose !== null && mlPerDay !== null) {
+      html += `<p><em>Mixtur:</em> ${formatDose(mlPerDose, 'ml')} per dosis, ${formatDose(mlPerDay, 'ml')} i alt pr. døgn.</p>`;
+      // Pakningsforslag
+      if (typeof duration === 'number' && medObj.mixture.packageVolumes && medObj.mixture.packageVolumes.length > 0) {
+        const totalVol = mlPerDay * duration;
+        const sortedVols = medObj.mixture.packageVolumes.slice().sort((a,b) => a-b);
+        // vælg kombination der minimerer antal pakninger
+        let chosenVol = sortedVols[0];
+        let packages = Math.ceil(totalVol / chosenVol);
+        for (const v of sortedVols) {
+          const needed = Math.ceil(totalVol / v);
+          if (needed < packages) {
+            chosenVol = v;
+            packages = needed;
+          }
+        }
+        html += `<p><em>Pakning (mixtur):</em> ${packages} × ${chosenVol} ml (rækker til ${duration} dage)</p>`;
+      }
+    }
+  }
+  // Tabletter
+  if (showTablets && medObj.tablets && medObj.tablets.strengths && perDose && daily) {
+    const strengths = medObj.tablets.strengths.slice().sort((a,b) => a-b);
+    // Vælg en styrke: den største styrke der ikke overstiger perDose eller den mindste hvis alle er større
+    let chosenStrength = strengths[0];
+    for (const s of strengths) {
+      if (s <= perDose) {
+        chosenStrength = s;
+      }
+    }
+    // beregn antal tabletter per dosis og pr. dag
+    const tabletsPerDose = perDose / chosenStrength;
+    const tabletsPerDay = daily / chosenStrength;
+    // total antal tabletter
+    const totalTablets = duration && typeof duration === 'number' ? tabletsPerDay * duration : null;
+    // vælg pakningsstørrelse
+    let packageSize = null;
+    if (medObj.tablets.packageCounts && totalTablets !== null) {
+      const sortedCounts = medObj.tablets.packageCounts.slice().sort((a,b) => a-b);
+      for (const count of sortedCounts) {
+        if (count >= totalTablets) {
+          packageSize = count;
+          break;
+        }
+      }
+      if (!packageSize) {
+        packageSize = sortedCounts[sortedCounts.length - 1];
+      }
+    }
+    // Formatér tekst
+    html += `<p><em>Tabletter:</em> ${chosenStrength} mg × ${tabletsPerDose.toFixed(2)} per dosis`;
+    html += ` (${tabletsPerDay.toFixed(2)} pr. døgn)`;
+    if (totalTablets !== null) {
+      html += `, i alt ${Math.ceil(totalTablets)} tabletter`;
+      if (packageSize) {
+        const neededPackages = Math.ceil(totalTablets / packageSize);
+        html += `. Pakning: ${neededPackages} × ${packageSize} stk.`;
+      }
+    }
+    html += `</p>`;
+  }
+  return html;
 }
 
 // Compute dosage when input changes
@@ -378,11 +577,34 @@ function computeDose() {
       }
     }
     // Ingen recidiv/failure logik for fixed dose
+
+    // Hvis der er angivet Scatol-behandling (ivermectin), vis den som tillægsinformation
+    if (trt.scatol) {
+      // dosering kun hvis vægten opfylder krav (≥15 kg)
+      if (weight < 15) {
+        html += `<p><strong>Oral behandling:</strong> Scatol (ivermectin) er kontraindiceret til børn under 15 kg.</p>`;
+      } else {
+        const scatolDose = trt.scatol.mgPerKgPerDose * weight;
+        html += `<p><strong>Oral behandling (Scatol):</strong> ${formatDose(scatolDose, 'mg')} engangsdosis`;
+        if (trt.scatol.repeatAfterDays) {
+          html += `, gentages efter ${trt.scatol.repeatAfterDays} dage`;
+        }
+        html += `.</p>`;
+        // Tilføj tabletinformation hvis tilgængeligt
+        if (trt.scatolMedication) {
+          const showTablets = weight >= 20;
+          html += generateMedicationInfo(trt.scatolMedication, scatolDose, scatolDose, 1, true, showTablets);
+        }
+        if (trt.scatol.notes) {
+          html += `<p>${trt.scatol.notes}</p>`;
+        }
+      }
+    }
   } else if (trt.mlPerKgPerDay) {
     // Flydende medicin (ml)
     const dailyMl = trt.mlPerKgPerDay * weight;
     const perDose = trt.dosesPerDay ? dailyMl / trt.dosesPerDay : dailyMl;
-    html += `<p><strong>Dosis per dag:</strong> ${formatDose(dailyMl, 'ml')}</p>`;
+    html += `<p><strong>Døgndosis:</strong> ${formatDose(dailyMl, 'ml')}</p>`;
     if (trt.dosesPerDay) {
       html += `<p><strong>Dosis per dose:</strong> ${formatDose(perDose, 'ml')} × ${trt.dosesPerDay} pr. døgn</p>`;
     }
@@ -392,7 +614,7 @@ function computeDose() {
     // Pulver (g)
     const dailyG = trt.gPerKgPerDay * weight;
     const sachets = dailyG / 6.9;
-    html += `<p><strong>Dosis per dag:</strong> ${formatDose(dailyG, 'g')} (~${formatDose(sachets, 'brev(e)')})</p>`;
+    html += `<p><strong>Døgndosis:</strong> ${formatDose(dailyG, 'g')} (~${formatDose(sachets, 'brev(e)')})</p>`;
     html += `<p><strong>Dosis per dose:</strong> hele dagsdosis gives på én gang</p>`;
     html += `<p><strong>Behandlingsvarighed:</strong> ${trt.durationDays}</p>`;
     html += `<p class="notes">${trt.notes}</p>`;
@@ -406,10 +628,19 @@ function computeDose() {
     if (typeof trt.mgPerKgPerDay === 'number') {
       daily = trt.mgPerKgPerDay * weight;
     } else if (perDose && trt.dosesPerDay) {
+      // beregn døgndosis ud fra dosis per dose og antal doser
       daily = perDose * trt.dosesPerDay;
     }
+    // Hvis dosis per dose ikke er defineret, men døgndosis og antal doser er kendt, beregnes perDose
+    if ((perDose === null || perDose === undefined) && daily !== null && trt.dosesPerDay) {
+      perDose = daily / trt.dosesPerDay;
+    }
+    // Vis navnet på hovedlægemidlet først, hvis tilgængeligt
+    if (trt.medication && trt.medication.name) {
+      html += `<p><strong>Lægemiddel:</strong> ${trt.medication.name}</p>`;
+    }
     if (daily !== null) {
-      html += `<p><strong>Dosis per dag:</strong> ${formatDose(daily, trt.unit)}</p>`;
+      html += `<p><strong>Døgndosis:</strong> ${formatDose(daily, trt.unit)}</p>`;
     }
     if (perDose !== null) {
       html += `<p><strong>Dosis per dose:</strong> ${formatDose(perDose, trt.unit)}`;
@@ -423,6 +654,30 @@ function computeDose() {
     }
     if (trt.notes) {
       html += `<p class="notes">${trt.notes}</p>`;
+    }
+
+    // Lægemiddel‑information baseret på præsenteret dosis (vægt, perDose/daily)
+    if (perDose !== null && daily !== null) {
+      // standard medicin: generer udelukkende administrationsvejledning (uden navnet som det allerede vises)
+      if (trt.medication) {
+        const durationForPkg = parseDurationDays(trt.durationDays);
+        const showTablets = weight >= 20; // børn <20 kg (≈<6 år) anbefales kun mixtur
+        html += generateMedicationInfo(trt.medication, perDose, daily, durationForPkg, false, showTablets);
+      }
+      // alternativ medicin med dedikeret object
+      if (trt.alternativeMedication) {
+        html += `<hr><p><strong>Forslag til alternativt lægemiddel:</strong></p>`;
+        if (trt.alternativeMedication.name) {
+          const durationForPkgAlt = parseDurationDays(trt.durationDays);
+          const showTabletsAlt = weight >= 20;
+          html += generateMedicationInfo(trt.alternativeMedication, perDose, daily, durationForPkgAlt, true, showTabletsAlt);
+        }
+        if (trt.alternativeMedication.other) {
+          const durationForPkgAlt = parseDurationDays(trt.durationDays);
+          const showTabletsAlt = weight >= 20;
+          html += generateMedicationInfo(trt.alternativeMedication.other, perDose, daily, durationForPkgAlt, true, showTabletsAlt);
+        }
+      }
     }
     // Alternative behandlinger for antibiotika eller andre
     if (trt.alternative) {
@@ -449,7 +704,7 @@ function computeDose() {
           altDaily = altPerDose * trt.alternative.dosesPerDay;
         }
         if (altDaily !== null) {
-          html += `<p>${formatDose(altDaily, trt.unit)} pr. dag`;
+          html += `<p>${formatDose(altDaily, trt.unit)} pr. døgn`;
           if (trt.alternative.dosesPerDay) {
             html += ` (${formatDose(altDaily / trt.alternative.dosesPerDay, trt.unit)} × ${trt.alternative.dosesPerDay})`;
           }
