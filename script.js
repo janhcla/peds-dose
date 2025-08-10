@@ -22,8 +22,8 @@ const treatments = {
     maxMgPerDay: 3000,
     medication: {
       name: "Paracetamol",
-      mixture: { mgPerMl: 24, packageVolumes: [100, 250] },
-      tablets: { strengths: [500], breakable: [true], packageCounts: [20, 30] }
+      mixture: { mgPerMl: 24, packageVolumes: [100, 250], brandName: "Panodil mikstur 24 mg/ml" },
+      tablets: { strengths: [500], breakable: [true], packageCounts: [20, 30], brandNames: ["Panodil"] }
     }
   },
   ibuprofen: {
@@ -38,8 +38,8 @@ const treatments = {
     ,
     medication: {
       name: "Ibuprofen",
-      mixture: { mgPerMl: 20, packageVolumes: [100] },
-      tablets: { strengths: [200], breakable: [false], packageCounts: [20, 30] }
+      mixture: { mgPerMl: 20, packageVolumes: [100], brandName: "Ipren mikstur 20 mg/ml" },
+      tablets: { strengths: [200], breakable: [false], packageCounts: [20, 30], brandNames: ["Ipren"] }
     }
   },
   otitis: {
@@ -70,9 +70,9 @@ const treatments = {
     ,
     medication: {
       name: "Penicillin V",
-      mixture: { mgPerMl: 50, packageVolumes: [200] },
+      mixture: { mgPerMl: 50, packageVolumes: [200], brandName: "Primcillin mikstur 50 mg/ml" },
       // Inkluder 1000 mg tablet (Pancillin) for at mindske antal tabletter per dosis
-      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30], brandNames: ["Primcillin", "Vepicombin", "Pancillin"] }
     }
   },
   strep: {
@@ -103,8 +103,8 @@ const treatments = {
     ,
     medication: {
       name: "Penicillin V",
-      mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
+      mixture: { mgPerMl: 50, packageVolumes: [200], brandName: "Primcillin mikstur 50 mg/ml" },
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30], brandNames: ["Primcillin", "Vepicombin", "Pancillin"] }
     }
   },
   erythema: {
@@ -138,8 +138,8 @@ const treatments = {
     ,
     medication: {
       name: "Penicillin V",
-      mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
+      mixture: { mgPerMl: 50, packageVolumes: [200], brandName: "Primcillin mikstur 50 mg/ml" },
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30], brandNames: ["Primcillin", "Vepicombin", "Pancillin"] }
     }
   },
   lactulose: {
@@ -192,14 +192,14 @@ const treatments = {
     ,
     medication: {
       name: "Penicillin V",
-      mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
+      mixture: { mgPerMl: 50, packageVolumes: [200], brandName: "Primcillin mikstur 50 mg/ml" },
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30], brandNames: ["Primcillin", "Vepicombin", "Pancillin"] }
     },
     alternativeMedication: {
       // Clarithromycin til pneumoni
       name: "Clarithromycin",
-      mixture: { mgPerMl: 25, packageVolumes: [50] },
-      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [14] },
+      mixture: { mgPerMl: 25, packageVolumes: [50], brandName: "Klacid mikstur 25 mg/ml" },
+      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [14], brandNames: ["Klacid", "Klacid"] },
       other: {
         name: "Amoxicillin/clavulansyre",
         mixture: { mgPerMl: 50, packageVolumes: [70] },
@@ -226,16 +226,16 @@ const treatments = {
     ,
     medication: {
       name: "Penicillin V",
-      mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
+      mixture: { mgPerMl: 50, packageVolumes: [200], brandName: "Primcillin mikstur 50 mg/ml" },
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30], brandNames: ["Primcillin", "Vepicombin", "Pancillin"] }
     },
     alternativeMedication: {
       name: "Clarithromycin",
-      mixture: { mgPerMl: 25, packageVolumes: [50] },
-      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [14] },
+      mixture: { mgPerMl: 25, packageVolumes: [50], brandName: "Klacid mikstur 25 mg/ml" },
+      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [14], brandNames: ["Klacid", "Klacid"] },
       other: {
         name: "Doxycyclin",
-        tablets: { strengths: [100], breakable: [false], packageCounts: [10] }
+        tablets: { strengths: [100], breakable: [false], packageCounts: [10], brandNames: ["Doxycyclin"] }
       }
     }
   },
@@ -250,8 +250,8 @@ const treatments = {
     ,
     medication: {
       name: "Dicloxacillin",
-      mixture: { mgPerMl: 25, packageVolumes: [100] },
-      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [20] }
+      mixture: { mgPerMl: 25, packageVolumes: [100], brandName: "Dicillin mikstur 25 mg/ml" },
+      tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [20], brandNames: ["Dicillin", "Dicillin"] }
     }
   },
   cystitis: {
@@ -271,13 +271,13 @@ const treatments = {
     ,
     medication: {
       name: "Pivmecillinam",
-      mixture: { mgPerMl: 20, packageVolumes: [100] },
-      tablets: { strengths: [200], breakable: [true], packageCounts: [20] }
+      mixture: { mgPerMl: 20, packageVolumes: [100], brandName: "Selexid mikstur 20 mg/ml" },
+      tablets: { strengths: [200], breakable: [true], packageCounts: [20], brandNames: ["Selexid"] }
     },
     alternativeMedication: {
       name: "Trimethoprim",
-      mixture: { mgPerMl: 40, packageVolumes: [50] },
-      tablets: { strengths: [100], breakable: [true], packageCounts: [20] }
+      mixture: { mgPerMl: 40, packageVolumes: [50], brandName: "Trimethoprim mikstur 40 mg/ml" },
+      tablets: { strengths: [100], breakable: [true], packageCounts: [20], brandNames: ["Trimethoprim"] }
     }
   },
   herpes: {
@@ -657,7 +657,7 @@ function computeDose() {
         // Tilføj tabletinformation hvis tilgængeligt
         if (trt.scatolMedication) {
           const showTablets = weight >= 20;
-          html += generateMedicationInfo(trt.scatolMedication, scatolDose, scatolDose, 1, true, showTablets);
+          html += generateMedicationInfoV2(trt.scatolMedication, scatolDose, scatolDose, 1, weight, true, showTablets, 1);
         }
         if (trt.scatol.notes) {
           html += `<p>${trt.scatol.notes}</p>`;
@@ -707,10 +707,7 @@ function computeDose() {
         perDose = daily / trt.dosesPerDay;
       }
     }
-    // Vis navnet på hovedlægemidlet først, hvis tilgængeligt
-    if (trt.medication && trt.medication.name) {
-      html += `<p><strong>Lægemiddel:</strong> ${trt.medication.name}</p>`;
-    }
+    // Først vises den anbefalede døgndosis, dosis per dose og varighed.
     if (daily !== null) {
       html += `<p><strong>Døgndosis:</strong> ${formatDose(daily, trt.unit)}</p>`;
     }
@@ -728,27 +725,23 @@ function computeDose() {
       html += `<p class="notes">${trt.notes}</p>`;
     }
 
-    // Lægemiddel‑information baseret på præsenteret dosis (vægt, perDose/daily)
-    if (perDose !== null && daily !== null) {
-      // standard medicin: generer udelukkende administrationsvejledning (uden navnet som det allerede vises)
-        if (trt.medication) {
-        const durationForPkg = parseDurationDays(trt.durationDays);
-        const showTablets = weight >= 20; // børn <20 kg (≈<6 år) anbefales kun mixtur
-        html += generateMedicationInfo(trt.medication, perDose, daily, durationForPkg, false, showTablets, trt.dosesPerDay);
+    // Vis administrationsformen (tabletter og/eller mixtur) og handelsnavne lige efter døgndosis
+    if (perDose !== null && daily !== null && trt.medication) {
+      const durationForPkg = parseDurationDays(trt.durationDays);
+      const showTablets = weight >= 20; // børn <20 kg (≈<6 år) anbefales kun mixtur
+      // Vis handelsnavn og dosis i med-sektion
+      html += generateMedicationInfoV2(trt.medication, perDose, daily, durationForPkg, weight, true, showTablets, trt.dosesPerDay);
+    }
+    // Alternativ medicin med dedikeret object
+    if (perDose !== null && daily !== null && trt.alternativeMedication) {
+      html += `<hr><p><strong>Forslag til alternativt lægemiddel:</strong></p>`;
+      const durationForPkgAlt = parseDurationDays(trt.durationDays);
+      const showTabletsAlt = weight >= 20;
+      if (trt.alternativeMedication.name) {
+        html += generateMedicationInfoV2(trt.alternativeMedication, perDose, daily, durationForPkgAlt, weight, true, showTabletsAlt, trt.dosesPerDay);
       }
-      // alternativ medicin med dedikeret object
-      if (trt.alternativeMedication) {
-        html += `<hr><p><strong>Forslag til alternativt lægemiddel:</strong></p>`;
-        if (trt.alternativeMedication.name) {
-          const durationForPkgAlt = parseDurationDays(trt.durationDays);
-          const showTabletsAlt = weight >= 20;
-          html += generateMedicationInfo(trt.alternativeMedication, perDose, daily, durationForPkgAlt, true, showTabletsAlt, trt.dosesPerDay);
-        }
-        if (trt.alternativeMedication.other) {
-          const durationForPkgAlt = parseDurationDays(trt.durationDays);
-          const showTabletsAlt = weight >= 20;
-          html += generateMedicationInfo(trt.alternativeMedication.other, perDose, daily, durationForPkgAlt, true, showTabletsAlt, trt.dosesPerDay);
-        }
+      if (trt.alternativeMedication.other) {
+        html += generateMedicationInfoV2(trt.alternativeMedication.other, perDose, daily, durationForPkgAlt, weight, true, showTabletsAlt, trt.dosesPerDay);
       }
     }
     // Alternative behandlinger for antibiotika eller andre
@@ -811,7 +804,7 @@ function computeDose() {
   }
   html += `</div>`;
   // Copy button
-  html += `<button class="copy-button" onclick="copyDose()">Kopiér dosis</button>`;
+  html += `<button class="copy-button" onclick="copyPrescription()">Kopier til journal</button>`;
   resultDiv.innerHTML = html;
   resultDiv.style.display = "block";
 }
@@ -825,6 +818,151 @@ function copyDose() {
   }).catch(err => {
     console.error('Kunne ikke kopiere:', err);
   });
+}
+
+// Ny funktion til at kopiere recept til journal fra window.currentPrescription
+function copyPrescription() {
+  if (window.currentPrescription) {
+    navigator.clipboard.writeText(window.currentPrescription).then(() => {
+      alert('Recept kopieret til journal.');
+    }).catch(err => {
+      console.error('Kunne ikke kopiere:', err);
+    });
+  } else {
+    copyDose();
+  }
+}
+
+/*
+ * generateMedicationInfoV2 – forbedret funktion til at generere tekst for
+ * administrationsformer. Den viser tabletter før mixtur, anvender handelsnavne
+ * (brandNames/brandName) og opdaterer window.currentPrescription for brug i
+ * journal. Parametrene er identiske med originalfunktionen men med ekstra
+ * argument weight for at beregne pakkestørrelser til recept, hvis nødvendigt.
+ */
+function generateMedicationInfoV2(medObj, perDose, daily, duration, weight, showName = true, showTablets = true, dosesPerDay = null) {
+  let html = "";
+  if (!medObj) return html;
+  // lægemiddelnavn
+  if (showName) {
+    html += `<p><strong>Lægemiddel:</strong> ${medObj.name}</p>`;
+  }
+  let tabletsHTML = "";
+  let mixtureHTML = "";
+  // Tabletter
+  if (showTablets && medObj.tablets && medObj.tablets.strengths && perDose && daily) {
+    const strengths = medObj.tablets.strengths.slice().sort((a,b) => a-b);
+    let chosenStrength = strengths[0];
+    for (const s of strengths) {
+      if (s <= perDose) chosenStrength = s;
+    }
+    let tabletsPerDose = perDose / chosenStrength;
+    if (tabletsPerDose > 4 && strengths.length > 0) {
+      chosenStrength = strengths[strengths.length - 1];
+      tabletsPerDose = perDose / chosenStrength;
+    }
+    const tabletsPerDay = daily / chosenStrength;
+    const totalTablets = duration && typeof duration === 'number' ? tabletsPerDay * duration : null;
+    let packageSize = null;
+    if (medObj.tablets.packageCounts && totalTablets !== null) {
+      const sortedCounts = medObj.tablets.packageCounts.slice().sort((a,b) => a-b);
+      for (const count of sortedCounts) {
+        if (count >= totalTablets) {
+          packageSize = count;
+          break;
+        }
+      }
+      if (!packageSize) packageSize = sortedCounts[sortedCounts.length - 1];
+    }
+    let brand = medObj.tablets.brandNames ? medObj.tablets.brandNames[medObj.tablets.strengths.indexOf(chosenStrength)] : medObj.name;
+    if (dosesPerDay && medObj.tablets.breakable) {
+      const ratio = perDose / chosenStrength;
+      let baseTablets = Math.floor(ratio * 2) / 2;
+      if (baseTablets < 0.5) baseTablets = 0.5;
+      const incrementsNeeded = Math.round((ratio - baseTablets) * dosesPerDay * 2);
+      const schedule = [];
+      for (let i = 0; i < dosesPerDay; i++) {
+        let tabletsThis = baseTablets;
+        if (i < incrementsNeeded) tabletsThis += 0.5;
+        schedule.push(tabletsThis);
+      }
+      const mgDelivered = schedule.reduce((sum, t) => sum + t * chosenStrength, 0);
+      const mgDifference = mgDelivered - daily;
+      const scheduleText = schedule.map(t => (t % 1 === 0 ? t.toFixed(0) : t.toFixed(1))).join(' + ');
+      let totalScheduleTablets = null;
+      if (duration && typeof duration === 'number') {
+        totalScheduleTablets = schedule.reduce((sum, t) => sum + t, 0) * duration;
+      }
+      tabletsHTML += `<div class="med-section tablets"><p><em>Tabletter:</em> ${brand ? brand + ' ' : ''}${chosenStrength}\u00a0mg: ${scheduleText} per dag`;
+      tabletsHTML += ` (dvs. ${mgDelivered.toFixed(0)}\u00a0mg/døgn)`;
+      if (Math.abs(mgDifference) > 1e-6) {
+        const sign = mgDifference > 0 ? 'over' : 'under';
+        tabletsHTML += `. Bemærk: Dette giver ${Math.abs(mgDifference).toFixed(0)}\u00a0mg ${sign} den anbefalede døgndosis.`;
+      }
+      if (totalScheduleTablets !== null) {
+        tabletsHTML += `, i alt ${Math.ceil(totalScheduleTablets)} tabletter`;
+        if (packageSize) {
+          const neededPackages = Math.ceil(totalScheduleTablets / packageSize);
+          tabletsHTML += `. Pakning: ${neededPackages} × ${packageSize} stk.`;
+        }
+      }
+      tabletsHTML += `</p></div>`;
+      if (showName) {
+        const dosePattern = schedule.map(t => (t % 1 === 0 ? t.toFixed(0) : t.toFixed(1))).join('+');
+        let presc = `Rp. tbl. ${brand} ${chosenStrength} mg ${dosePattern} dagl. i ${duration} dage`;
+        if (totalScheduleTablets !== null) presc += `, i alt ${Math.ceil(totalScheduleTablets)} stk.`;
+        window.currentPrescription = presc;
+      }
+    } else {
+      tabletsHTML += `<div class="med-section tablets"><p><em>Tabletter:</em> ${brand ? brand + ' ' : ''}${chosenStrength}\u00a0mg × ${tabletsPerDose.toFixed(2)} per dosis`;
+      tabletsHTML += ` (${tabletsPerDay.toFixed(2)} pr. døgn)`;
+      if (totalTablets !== null) {
+        tabletsHTML += `, i alt ${Math.ceil(totalTablets)} tabletter`;
+        if (packageSize) {
+          const neededPackages = Math.ceil(totalTablets / packageSize);
+          tabletsHTML += `. Pakning: ${neededPackages} × ${packageSize} stk.`;
+        }
+      }
+      tabletsHTML += `</p></div>`;
+      if (showName) {
+        let presc = `Rp. tbl. ${brand} ${chosenStrength} mg ${tabletsPerDose.toFixed(2)}×${dosesPerDay} dagl. i ${duration} dage`;
+        if (totalTablets !== null) presc += `, i alt ${Math.ceil(totalTablets)} stk.`;
+        window.currentPrescription = presc;
+      }
+    }
+  }
+  // Mixtur
+  if (medObj.mixture && typeof medObj.mixture.mgPerMl === 'number') {
+    const mgPerMl = medObj.mixture.mgPerMl;
+    const mlPerDose = perDose && mgPerMl > 0 ? perDose / mgPerMl : null;
+    const mlPerDay = daily && mgPerMl > 0 ? daily / mgPerMl : null;
+    if (mlPerDose !== null && mlPerDay !== null) {
+      const brandMix = medObj.mixture.brandName ? medObj.mixture.brandName : medObj.name;
+      mixtureHTML += `<div class="med-section mixture"><p><em>Mixtur:</em> ${brandMix}: ${formatDose(mlPerDose, 'ml')} per dosis, ${formatDose(mlPerDay, 'ml')} i alt pr. døgn.`;
+      if (typeof duration === 'number' && medObj.mixture.packageVolumes && medObj.mixture.packageVolumes.length > 0) {
+        const totalVol = mlPerDay * duration;
+        const sortedVols = medObj.mixture.packageVolumes.slice().sort((a,b) => a-b);
+        let chosenVol = sortedVols[0];
+        let packages = Math.ceil(totalVol / chosenVol);
+        for (const v of sortedVols) {
+          const needed = Math.ceil(totalVol / v);
+          if (needed < packages) {
+            chosenVol = v;
+            packages = needed;
+          }
+        }
+        mixtureHTML += ` Pakning: ${packages} × ${chosenVol}\u00a0ml (rækker til ${duration} dage)`;
+        if (showName && (!showTablets || !medObj.tablets)) {
+          const dosePattern = dosesPerDay ? `${mlPerDose.toFixed(1)} ml × ${dosesPerDay}` : `${mlPerDay.toFixed(1)} ml dagl.`;
+          let presc = `Rp. mixt. ${brandMix} ${dosePattern} i ${duration} dage, i alt ${packages} × ${chosenVol} ml`;
+          window.currentPrescription = presc;
+        }
+      }
+      mixtureHTML += `</p></div>`;
+    }
+  }
+  html += tabletsHTML + mixtureHTML;
+  return html;
 }
 
 // Event listeners

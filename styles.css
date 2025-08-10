@@ -89,6 +89,25 @@ input[type="number"] {
   font-size: 0.9rem;
 }
 
+/* Visuelle sektioner for tabletter og mixtur */
+.med-section {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.med-section.tablets {
+  background: #f0f5ff;
+  border: 1px solid #b3cce6;
+}
+.med-section.mixture {
+  background: #fff5f5;
+  border: 1px solid #e6b3b3;
+}
+.med-section em {
+  font-weight: bold;
+  color: #004b8d;
+}
+
 .info {
   margin-top: 1.5rem;
   font-size: 0.85rem;
