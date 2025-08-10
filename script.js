@@ -454,7 +454,7 @@ function parseDurationDays(duration) {
  * trt.medication indeholder oplysninger om standardpræparat (navn, mixtur, tabletter osv.).
  * For nogle behandlinger findes alternative præparater i trt.alternativeMedication.
  */
-function generateMedicationInfo(medObj, perDose, daily, duration, showName = true, showTablets = true) {
+function generateMedicationInfo(medObj, perDose, daily, duration, showName = true, showTablets = true, dosesPerDay = null) {
   let html = "";
   if (!medObj) return html;
   // Navn på lægemiddel, hvis ønsket
@@ -528,16 +528,61 @@ function generateMedicationInfo(medObj, perDose, daily, duration, showName = tru
       }
     }
     // Formatér tekst
-    html += `<p><em>Tabletter:</em> ${chosenStrength} mg × ${tabletsPerDose.toFixed(2)} per dosis`;
-    html += ` (${tabletsPerDay.toFixed(2)} pr. døgn)`;
-    if (totalTablets !== null) {
-      html += `, i alt ${Math.ceil(totalTablets)} tabletter`;
-      if (packageSize) {
-        const neededPackages = Math.ceil(totalTablets / packageSize);
-        html += `. Pakning: ${neededPackages} × ${packageSize} stk.`;
+    // Hvis vi har information om antal doser pr. dag, kan vi beregne en fordeling i hele eller halve tabletter for hver dosis
+    if (dosesPerDay && medObj.tablets.breakable) {
+      // antal doser er kendt og vi kan bryde tabletterne
+      const ratio = perDose / chosenStrength;
+      // afrund ned til nærmeste halve tablet som grundbeløb
+      let baseTablets = Math.floor(ratio * 2) / 2;
+      if (baseTablets < 0.5) baseTablets = 0.5;
+      // antal halve tablet-increments der skal fordeles for at nærme sig ratio
+      const incrementsNeeded = Math.round((ratio - baseTablets) * dosesPerDay * 2);
+      // opbyg fordeling: fordel +0,5 tablet til de første 'incrementsNeeded' doser
+      const schedule = [];
+      for (let i = 0; i < dosesPerDay; i++) {
+        let tabletsThisDose = baseTablets;
+        if (i < incrementsNeeded) {
+          tabletsThisDose += 0.5;
+        }
+        schedule.push(tabletsThisDose);
       }
+      // Beregn total mg administreret pr. dag
+      const mgDelivered = schedule.reduce((sum, t) => sum + t * chosenStrength, 0);
+      const mgDifference = mgDelivered - daily;
+      // Formatér fordeling til tekst (f.eks. 2 + 1.5 + 2 + 1.5)
+      const scheduleText = schedule.map(t => t % 1 === 0 ? t.toFixed(0) : t.toFixed(1)).join(' + ');
+      // total antal tabletter ud fra fordelingen og behandlingsvarighed
+      let totalScheduleTablets = null;
+      if (duration && typeof duration === 'number') {
+        totalScheduleTablets = schedule.reduce((sum, t) => sum + t, 0) * duration;
+      }
+      html += `<p><em>Tabletter:</em> ${chosenStrength} mg: ${scheduleText} per dag`;
+      html += ` (dvs. ${mgDelivered.toFixed(0)} mg/døgn)`;
+      if (Math.abs(mgDifference) > 1e-6) {
+        const sign = mgDifference > 0 ? 'over' : 'under';
+        html += `. Bemærk: Dette giver ${Math.abs(mgDifference).toFixed(0)} mg ${sign} den anbefalede døgndosis.`;
+      }
+      if (totalScheduleTablets !== null) {
+        html += `, i alt ${Math.ceil(totalScheduleTablets)} tabletter`;
+        if (packageSize) {
+          const neededPackages = Math.ceil(totalScheduleTablets / packageSize);
+          html += `. Pakning: ${neededPackages} × ${packageSize} stk.`;
+        }
+      }
+      html += `</p>`;
+    } else {
+      // Hvis ikke vi kan beregne fordeling, vis standard decimaler
+      html += `<p><em>Tabletter:</em> ${chosenStrength} mg × ${tabletsPerDose.toFixed(2)} per dosis`;
+      html += ` (${tabletsPerDay.toFixed(2)} pr. døgn)`;
+      if (totalTablets !== null) {
+        html += `, i alt ${Math.ceil(totalTablets)} tabletter`;
+        if (packageSize) {
+          const neededPackages = Math.ceil(totalTablets / packageSize);
+          html += `. Pakning: ${neededPackages} × ${packageSize} stk.`;
+        }
+      }
+      html += `</p>`;
     }
-    html += `</p>`;
   }
   return html;
 }
@@ -686,10 +731,10 @@ function computeDose() {
     // Lægemiddel‑information baseret på præsenteret dosis (vægt, perDose/daily)
     if (perDose !== null && daily !== null) {
       // standard medicin: generer udelukkende administrationsvejledning (uden navnet som det allerede vises)
-      if (trt.medication) {
+        if (trt.medication) {
         const durationForPkg = parseDurationDays(trt.durationDays);
         const showTablets = weight >= 20; // børn <20 kg (≈<6 år) anbefales kun mixtur
-        html += generateMedicationInfo(trt.medication, perDose, daily, durationForPkg, false, showTablets);
+        html += generateMedicationInfo(trt.medication, perDose, daily, durationForPkg, false, showTablets, trt.dosesPerDay);
       }
       // alternativ medicin med dedikeret object
       if (trt.alternativeMedication) {
@@ -697,12 +742,12 @@ function computeDose() {
         if (trt.alternativeMedication.name) {
           const durationForPkgAlt = parseDurationDays(trt.durationDays);
           const showTabletsAlt = weight >= 20;
-          html += generateMedicationInfo(trt.alternativeMedication, perDose, daily, durationForPkgAlt, true, showTabletsAlt);
+          html += generateMedicationInfo(trt.alternativeMedication, perDose, daily, durationForPkgAlt, true, showTabletsAlt, trt.dosesPerDay);
         }
         if (trt.alternativeMedication.other) {
           const durationForPkgAlt = parseDurationDays(trt.durationDays);
           const showTabletsAlt = weight >= 20;
-          html += generateMedicationInfo(trt.alternativeMedication.other, perDose, daily, durationForPkgAlt, true, showTabletsAlt);
+          html += generateMedicationInfo(trt.alternativeMedication.other, perDose, daily, durationForPkgAlt, true, showTabletsAlt, trt.dosesPerDay);
         }
       }
     }
