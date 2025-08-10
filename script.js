@@ -659,6 +659,10 @@ function computeDose() {
           const showTablets = weight >= 20;
           html += generateMedicationInfoV2(trt.scatolMedication, scatolDose, scatolDose, 1, weight, true, showTablets, 1);
         }
+        // Hvis der findes en genereret recept i currentPrescription, tilføj gentagelsesinformation til journalteksten
+        if (trt.scatol.repeatAfterDays && window.currentPrescription) {
+          window.currentPrescription = `${window.currentPrescription}. Gentages efter ${trt.scatol.repeatAfterDays} dage`;
+        }
         if (trt.scatol.notes) {
           html += `<p>${trt.scatol.notes}</p>`;
         }
