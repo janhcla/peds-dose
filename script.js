@@ -19,6 +19,7 @@ const treatments = {
     durationDays: "1‑3 dage",
     notes: "Børn kan få 15 mg/kg pr. dosis (typisk 60 mg/kg pr. døgn) fordelt på 4 doser med mindst 4 timer mellem doserne. Maksimalt 3 g pr. døgn."
     ,
+    maxMgPerDay: 3000,
     medication: {
       name: "Paracetamol",
       mixture: { mgPerMl: 24, packageVolumes: [100, 250] },
@@ -49,6 +50,7 @@ const treatments = {
     durationDays: 5,
     // Noter baseret på kilden: Penicillin V 50 mg/kg/døgn i 3 doser i 5 dage.
     notes: "Førstevalg er phenoxymethylpenicillin (Penicillin V) 50 mg/kg/døgn fordelt på 3 doser i 5 dage.",
+    maxMgPerDay: 3000,
     alternative: {
       name: "Clarithromycin (ved penicillin‑allergi)",
       mgPerKgPerDay: 15,
@@ -69,7 +71,8 @@ const treatments = {
     medication: {
       name: "Penicillin V",
       mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+      // Inkluder 1000 mg tablet (Pancillin) for at mindske antal tabletter per dosis
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
     }
   },
   strep: {
@@ -80,6 +83,7 @@ const treatments = {
     durationDays: 5,
     // Noter baseret på kilden: Penicillin V 50 mg/kg/døgn i 3 doser i 5 dage.
     notes: "Førstevalg er phenoxymethylpenicillin (Penicillin V) 50 mg/kg/døgn fordelt på 3 doser i 5 dage.",
+    maxMgPerDay: 3000,
     alternative: {
       name: "Clarithromycin (ved penicillin‑allergi)",
       mgPerKgPerDay: 15,
@@ -100,7 +104,7 @@ const treatments = {
     medication: {
       name: "Penicillin V",
       mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
     }
   },
   erythema: {
@@ -112,6 +116,7 @@ const treatments = {
     durationDays: 10,
     // Noter baseret på kilden: Penicillin V 100 mg/kg/døgn (maks. 3 g) i 4 doser i 10 dage.
     notes: "Penicillin V 100 mg/kg/døgn (maks. 3 g) fordelt på 4 doser i 10 dage.",
+    maxMgPerDay: 3000,
     alternative: {
       name: "Doxycyclin eller Azithromycin (ved penicillin‑allergi)",
       // For børn ≥8 år: Doxycyclin 4 mg/kg/døgn i 2 doser, højst 100 mg pr. dosis
@@ -134,7 +139,7 @@ const treatments = {
     medication: {
       name: "Penicillin V",
       mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
     }
   },
   lactulose: {
@@ -176,6 +181,7 @@ const treatments = {
     // DSAM‑vejledningen for akutte nedre luftvejsinfektioner anbefaler phenoxymethylpenicillin 50 mg/kg/døgn fordelt på 3 doser i 5 dage【500917605099316†L438-L449】. Derfor anvendes en behandlingsvarighed på 5 dage.
     durationDays: 5,
     notes: "Førstevalg er phenoxymethylpenicillin (Penicillin V) 50 mg/kg/døgn fordelt på 3 doser i 5 dage. Ved behandlingssvigt kan kuren forlænges.",
+    maxMgPerDay: 3000,
     alternative: {
       name: "Clarithromycin (ved penicillinallergi) eller Amoxicillin/clavulansyre",
       mgPerKgPerDay: 15,
@@ -187,7 +193,7 @@ const treatments = {
     medication: {
       name: "Penicillin V",
       mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
     },
     alternativeMedication: {
       // Clarithromycin til pneumoni
@@ -209,6 +215,7 @@ const treatments = {
     dosesPerDay: 3,
     durationDays: 7,
     notes: "Penicillin V 50 mg/kg/døgn fordelt på 3 doser i 7 dage.",
+    maxMgPerDay: 3000,
     alternative: {
       name: "Clarithromycin (ved penicillinallergi)",
       mgPerKgPerDay: 15,
@@ -220,7 +227,7 @@ const treatments = {
     medication: {
       name: "Penicillin V",
       mixture: { mgPerMl: 50, packageVolumes: [200] },
-      tablets: { strengths: [400, 800], breakable: [true, true], packageCounts: [20, 30] }
+      tablets: { strengths: [400, 800, 1000], breakable: [true, true, true], packageCounts: [20, 30] }
     },
     alternativeMedication: {
       name: "Clarithromycin",
@@ -482,15 +489,27 @@ function generateMedicationInfo(medObj, perDose, daily, duration, showName = tru
   // Tabletter
   if (showTablets && medObj.tablets && medObj.tablets.strengths && perDose && daily) {
     const strengths = medObj.tablets.strengths.slice().sort((a,b) => a-b);
-    // Vælg en styrke: den største styrke der ikke overstiger perDose eller den mindste hvis alle er større
+    /*
+     * Vælg den mest hensigtsmæssige tabletstyrke. Som udgangspunkt vælges den
+     * største styrke, der ikke overstiger perDose (for at undgå overdosering). Men
+     * hvis dette valg medfører at der skal anvendes mere end 4 tabletter pr. dosis,
+     * skiftes der til den største tilgængelige styrke. Dette reducerer antallet af
+     * tabletter og kan være mere hensigtsmæssigt, fx ved valg af Pancillin 1 g
+     * frem for Primcillin 400 mg.
+     */
     let chosenStrength = strengths[0];
+    // Først prøv at vælge største styrke <= perDose
     for (const s of strengths) {
       if (s <= perDose) {
         chosenStrength = s;
       }
     }
-    // beregn antal tabletter per dosis og pr. dag
-    const tabletsPerDose = perDose / chosenStrength;
+    // Hvis antallet af tabletter pr. dosis overstiger 4, vælg den største styrke i sortimentet
+    let tabletsPerDose = perDose / chosenStrength;
+    if (tabletsPerDose > 4 && strengths.length > 0) {
+      chosenStrength = strengths[strengths.length - 1];
+      tabletsPerDose = perDose / chosenStrength;
+    }
     const tabletsPerDay = daily / chosenStrength;
     // total antal tabletter
     const totalTablets = duration && typeof duration === 'number' ? tabletsPerDay * duration : null;
@@ -635,6 +654,14 @@ function computeDose() {
     if ((perDose === null || perDose === undefined) && daily !== null && trt.dosesPerDay) {
       perDose = daily / trt.dosesPerDay;
     }
+
+    // Anvend eventuel maksimal døgndosis for hovedbehandling
+    if (typeof trt.maxMgPerDay === 'number' && daily !== null && daily > trt.maxMgPerDay) {
+      daily = trt.maxMgPerDay;
+      if (trt.dosesPerDay) {
+        perDose = daily / trt.dosesPerDay;
+      }
+    }
     // Vis navnet på hovedlægemidlet først, hvis tilgængeligt
     if (trt.medication && trt.medication.name) {
       html += `<p><strong>Lægemiddel:</strong> ${trt.medication.name}</p>`;
@@ -702,6 +729,13 @@ function computeDose() {
           altDaily = trt.alternative.mgPerKgPerDay * weight;
         } else if (altPerDose && trt.alternative.dosesPerDay) {
           altDaily = altPerDose * trt.alternative.dosesPerDay;
+        }
+        // Anvend maksimal døgndosis hvis defineret
+        if (typeof trt.alternative.maxMgPerDay === 'number' && altDaily !== null && altDaily > trt.alternative.maxMgPerDay) {
+          altDaily = trt.alternative.maxMgPerDay;
+          if (trt.alternative.dosesPerDay) {
+            altPerDose = altDaily / trt.alternative.dosesPerDay;
+          }
         }
         if (altDaily !== null) {
           html += `<p>${formatDose(altDaily, trt.unit)} pr. døgn`;
