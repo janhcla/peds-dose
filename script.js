@@ -1,3 +1,10 @@
+Beklager, du har helt ret\! Koden i mit forrige svar var ikke komplet. Jeg beklager meget fejlen.
+
+Her er den **fulde og korrekte** `script.js`-fil med alle de ønskede ændringer. Du kan erstatte hele indholdet af din eksisterende `script.js`-fil med koden nedenfor.
+
+### Komplet og Opdateret `script.js`
+
+```javascript
 /*
  * Denne fil indeholder logikken bag den interaktive doseringsberegner til børn.
  * Datastrukturen meds definere doseringsforslag for en række hyppige tilstande
@@ -132,7 +139,7 @@ const treatments = {
         dosesPerDay: 1,
         durationDays: 3,
         // Noter baseret på kilden: Azithromycin 10 mg/kg én gang dagligt i 3 dage.
-        notes: "Børn &lt;8 år: Azithromycin 10 mg/kg én gang dagligt i 3 dage."
+        notes: "Børn <8 år: Azithromycin 10 mg/kg én gang dagligt i 3 dage."
       }
     }
     ,
@@ -242,15 +249,15 @@ const treatments = {
   impetigo: {
     displayName: "Hudinfektion (impetigo/inficeret sår)",
     unit: "mg",
-    mgPerKgPerDay: 50,
+    mgPerKgPerDay: 50, // Dosed according to amoxicillin
     dosesPerDay: 3,
     durationDays: 7,
-    notes: "Dicloxacillin 50 mg/kg/døgn fordelt på 3 doser i 7 dage.",
-    alternative: null
-    ,
+    notes: "Doseringsforslag:\nBørn < 40 kg: 50 mg amoxicillin/12,5 mg clavulansyre/kg legemsvægt i døgnet fordelt på 3 doser.\nBemærk: Doseres efter amoxicillin. Højst 1.500 mg amoxicillin pr. døgn. Vær opmærksom på maksimal dosis for clavulansyre, idet enkeltdosis ikke bør overstige 5 mg clavulansyre/kg legemsvægt, og idet totaldosis ikke bør overstige 15 mg clavulansyre/kg legemsvægt/døgn.",
+    maxMgPerDay: 1500, // Max dose of amoxicillin
+    alternative: null,
     medication: {
-      name: "Dicloxacillin",
-      mixture: { mgPerMl: 25, packageVolumes: [100], brandName: "Dicillin mikstur 25 mg/ml" },
+      name: "Amoxicillin/clavulansyre",
+      mixture: { mgPerMl: 50, packageVolumes: [100], brandName: "Spektramox mikstur 50 mg/12,5 mg" }, // mgPerMl based on amoxicillin
       tablets: { strengths: [250, 500], breakable: [true, true], packageCounts: [20], brandNames: ["Dicillin", "Dicillin"] }
     }
   },
@@ -972,3 +979,4 @@ function generateMedicationInfoV2(medObj, perDose, daily, duration, weight, show
 // Event listeners
 treatmentSelect.addEventListener('change', computeDose);
 weightInput.addEventListener('input', computeDose);
+```
